@@ -1,0 +1,53 @@
+-*-outline-*-
+
+* Ensure it plays nicely with tramp.
+
+  After loading both tramp and cygwin-mount, when I do C-x d /tmp RET,
+  I see
+
+       /:
+       wildcard tmp
+     (No match)
+     total 0
+
+  But if I remove the tramp handler from some hook or other (I forget
+  which), cygwin-mount resumes working perfectly.  (My current
+  workaround is to avoid loading tramp if cygwin-mount is already
+  loaded.)
+
+* Write lots of tests
+
+* Make `unload-feature' Do The Right Thing
+   namely remove stuff from file-name-handler-alist.  This appears not
+   to happen automagically, so we probably need to define
+   cygwin-mount-unload-hook.
+
+* lazy initialization
+   Currently, the mount table gets filled in when you run
+   cygwin-mount-activate.  However, it might be cleaner to have
+   cygwin-mount-substitute-longest-mount-name fill the table in if
+   it's empty.  Ideally it'd be nice to entirely eliminate
+   cygwin-mount-activate (and cygwin-mount-deactivate).
+
+* Consider making a Cygwin package of cygwin-mount
+   should it conflict with Cygwin Emacs?  Does Cygwin's setup even
+   *have* the concept of conflict?  Or perhaps just wrap the whole
+   thing with, in effect, "load this file only if we're Win32 and not
+   cygwin".
+
+* Test customization.
+  Of course I have almost no idea how customization works :(
+
+* Consider flipping the cells in the cygwin-mount-table alist.
+  That is, put the cygwin directory in the car, and the "windows
+  device" in the CDR.  This won't make things work any better, but
+  it'll conform to standard Lisp practice of having the key in the
+  car, and the sought data in the CDR.  At least, I *think* the cygwin
+  directory is the key, and the "windows device" is the sought data.
+
+* Closely related to the above: write unit tests for the function 
+  cygwin-mount-substitute-longest-mount-name.  That function appears
+  to be the heart of the whole matter, and it looks like it'd be easy
+  to test -- there's one free variable (namely,
+  cygwin-mount-table--internal, the alist referred to above), and one
+  input parameter.

@@ -1,0 +1,85 @@
+September 2003: Eric Hanchrow is attempting to simplify the parsing
+of output from "mount"
+
++ Version 1.4.5, modified September 2003 by Eric Hanchrow (offby1@blarg.net)
+  - cygwin-mount-get-mount-regexp now works with cygwin versions > 1.3
++ Version 1.4.4, modified May 2002 by Klaus Berndl (berndl@sdm.de)
+  - Fixed a typo which prevents ange-ftp be loaded.
+  - Added the URL where this library can be found
++ Version 1.4.3, modified May 2002 by Klaus Berndl (berndl@sdm.de)
+  - New constant cygwin-mount-version
+  - Fixing a small bug
++ Version 1.4.2, modified November 2001 by Klaus Berndl (berndl@sdm.de)
+  - Checks if the ange-ftp library is installed. If not it skips the
+    ange-ftp part in this package.
+  - Also tested slightly with XEmacs native win32-port >= 21.1.
++ Version 1.4.1, modified June 2001 by Klaus Berndl (berndl@sdm.de)
+  - Fixed a bug if no cygdrive-prefix for user is set but only for system.
++ Version 1.4, modified may 2001 by Klaus Berndl (berndl@sdm.de)
+  - Now every cygdrive-prefix can be handled (see Commentary above).
+  - All variables and functions have the prefix "cygwin-mount-".
+
++ Version 1.3, modified may 2001 by Klaus Berndl (berndl@sdm.de)
+  - Bugfix in the function `cygwin-mount-substitute-longest-mount-name'.
+  - much better customization. Now no(!) external processes run only with
+    loading the package. All the initialization of mount-points etc. is
+    first done with calling `cygwin-mount-activate'.
+  - Important: Now the cygwin mountpoints are stored in the new variable
+    `cygwin-mount-table--internal'. This variable must not be set by the user
+    but it is only set by customizing `cygwin-mount-table'!
+
++ Version 1.2.1, modified may 2001 by Klaus Berndl (berndl@sdm.de):
+  - renaming the package to cygwin-mount.el
+  - Better finding of the mount- and uname-program
+  - now works for different cygwin versions:
+    * cygwin <= 1.1.8
+    * cygwin >= 1.3.1
+    There is a new option `cygwin-mount-parsing-regexp' where these regexps
+    are defined and where also a custom regexp can be defined.
+    Thanks for the idea and a first implementation to Charles Curley
+    (ccurley@trib.com) and Karel Sprenger (karel.sprenger@compaq.com).
+  - Fixes problem with expand-file-name handling. This behaves differently
+    from most other primitives that is called via file-name-handler-alist,
+    because it takes two arguments rather than one. Either one or both
+    arguments could trigger the invocation of the file-name-handler-alist.
+    Thanks for the patch to Richard Y. Kim (ryk@dspwiz.com).
+  - Option to initialize the `cygwin-mount-table' either snychron (default)
+    or asynchron: `cygwin-mount-build-mount-table-asynch'.
+    Thanks for the idea and a first implementation to Nick Sieger
+    (nsieger@bitstream.net).
+
++ Version 1.0, modified January 2001 by Klaus Berndl (berndl@sdm.de):
+  - Added customization
+  - Added activating and deactivating functions (emacs-packages should not
+    activating itself only by loading!). Deactivating removes any new
+    filehandlers and restore the original ange-ftp function.
+  - Added test, if mount-program exists in PATH and if system-type is
+    windows-nt.
+  - Corrects a bug in the longest mount point substitution (network devices
+    like //Host/Path are now never substituted because a mount point / then
+    would always be incorrectly substituted. Now all file-operations work
+    correct with network devices.
+  - corrects a bug in the /cygdrive/-style regexp.
+  - Makes the first "real" emacs-package cygwin32-mount.el
+  All my changes are only removing bugs and adding stuff, so this code
+  becomes a correct emacs-package. All substantiell working code and ideas
+  come from the other authors.
+
++ Original version 0.1 by Michael Cook <mcook@cognex.com>:
+  - modified Jun 18 1998 by Keisuke Mori <ksk@ntts.com> to make it work with
+    ange-ftp and enable mapping a drive letter
+  - modified Oct 25 1999 by Drew Moseley (drewmoseley@mindspring.com) to
+    support /cygdrive style drive maps and for better coexistence with
+    ange-ftp.
+  - modified Feb 7 2000 by James Ganong (jeg@bigseal.ucsc.edu) to work when
+    / is mounted in a subdirectory instead of top level of a drive, and to
+    check longest directory names first, to a / mount does not shadow.
+  - modified Mar 23 2000 by Jeff Juliano <juliano@cs.unc.edu> to make a
+    user-callable function that performs the mapping. I use this in my
+    .emacs file to find my non-version-specific site-lisp directory since
+    NTemacs doesn't have one in its search path.
+  - modified July 2000 by Jeff Juliano <juliano@cs.unc.edu>: ps-print to
+    //machine/printer-name was broken. cygwin-mount would intercept and try
+    to convert the name to a local path, even though one doesn't exist.
+    Also, don't do mount table lookup as early as used to. warning: this
+    isn't extensively tested, and may not be correct.

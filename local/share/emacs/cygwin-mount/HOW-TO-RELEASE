@@ -1,0 +1,29 @@
+-*-text-*-
+
+* Make sure cygwin-mount-version is three nice integers separated by
+  dots, as opposed to some interim thing like "1.4.6+".
+
+* Check in.
+
+* svn -m 'Preparing for version foo release' cp         \
+  file:///home/erich/svn-repos/cm/trunk                 \
+  file:///home/erich/svn-repos/cm/branches/whatever
+
+* hack on the branch if needed.  Ensure the tests pass (try CVS Emacs
+  too; I think I've seen it fail there).  Backport any hacks into
+  trunk.
+
+* svn -m 'Release version foo' mv                       \
+  file:///home/erich/svn-repos/cm/branches/whatever     \
+  file:///home/erich/svn-repos/cm/tags/whatever
+
+* scp files from tag to http://www.blarg.net/~offby1/cygwin-mount/.
+  Be sure that they're world-readable.
+
+* Upload to http://www.emacswiki.org/cgi-bin/upload.pl ... although I
+  would prefer that those guys *pull* from me, rather than me having
+  to remember to *push* to them ...
+
+* Send an announcement email to gnu-emacs-sources@gnu.org.  A nifty
+  way to remember what you've done is
+  contrib/client-side/svn_all_diffs.pl, in the subversion source tree.
