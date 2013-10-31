@@ -14,8 +14,6 @@
 ;; Ensure ~/local/bin is on our local PATH.  Some startup environments
 ;; (e.g. Emacs under X11) won't inherit the full zsh path.
 ;; 
-(if (file-exists-p "/opt/hb/bin")
-    (prepend-to-path "/opt/hb/bin"))
 (prepend-to-path "~/local/bin")
 
 ;; Also ensure that ~/local/bin is on our remote PATH when
